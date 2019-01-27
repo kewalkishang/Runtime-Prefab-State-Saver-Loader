@@ -13,6 +13,6 @@ public class Manager : MonoBehaviour {
     {
         PrefabsD data = SaveSystem.LoadShapes();
         foreach(ShapeData sd in data.shapesA)
-        Debug.Log(sd.position[0]);
+        Debug.Log(sd.position[0]+" "+sd.PrefabTag+" " + sd.scale[0] + " "+ sd.rotation[0]);
     }
 }
