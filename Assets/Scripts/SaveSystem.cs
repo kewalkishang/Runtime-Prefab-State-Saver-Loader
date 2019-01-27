@@ -16,11 +16,10 @@ public class SaveSystem : MonoBehaviour {
         formatter.Serialize(stream, data);
         stream.Close();
     }
-
     public static PrefabData LoadShape()
     {
         string path = Application.persistentDataPath + "/shapeD.fun";
-        if(File.Exists(path))
+        if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -35,4 +34,40 @@ public class SaveSystem : MonoBehaviour {
             return null;
         }
     }
+    public static void SaveShapes( )
+    {
+         BinaryFormatter formatter = new BinaryFormatter();
+         string path = Application.persistentDataPath + "/prefD.fun";
+         FileStream stream = new FileStream(path, FileMode.Create);
+        Shapes[] sha = (Shapes[])GameObject.FindObjectsOfType(typeof(Shapes));
+        Debug.Log("Count " + sha.Length);
+        PrefabsD data = new PrefabsD();
+        foreach (Shapes sa in sha)
+        {
+            ShapeData sd = new ShapeData(sa);
+            data.AddShape(sd);
+        }
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+    public static PrefabsD LoadShapes()
+    {
+        string path = Application.persistentDataPath + "/prefD.fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            PrefabsD data = formatter.Deserialize(stream) as PrefabsD;
+            stream.Close();
+            return data;
+
+        }
+        else
+        {
+            Debug.LogError(" Shapen file not found in " + path);
+            return null;
+        }
+    }
+
+      
 }
